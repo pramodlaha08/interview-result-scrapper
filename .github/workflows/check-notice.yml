@@ -20,17 +20,14 @@ jobs:
         with:
           node-version: 18
 
-      # Step 3: Inject the secret as an environment variable
-      - name: Set environment variable
-        env:
-          APP_PASS: ${{ secrets.APP_PASS }}
-
-      # Step 4: Install dependencies
+      # Step 3: Install dependencies
       - name: Install dependencies
         run: npm install
 
+      # Step 4: Set environment variable
+      - name: Set environment variable
+        run: echo "APP_PASS=${{ secrets.APP_PASS }}" >> $GITHUB_ENV
+
       # Step 5: Run the script
       - name: Run the scraper
-        env:
-          APP_PASS: ${{ secrets.APP_PASS }} # Pass the secret to the script
         run: node index.js
