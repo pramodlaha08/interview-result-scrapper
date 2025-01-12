@@ -1,0 +1,36 @@
+name: Check Notice
+
+on:
+  schedule:
+    - cron: "*/15 * * * *" # Runs every 15 minutes
+  workflow_dispatch: # Allows manual triggering of the workflow
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Check out the repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Step 2: Set up Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      # Step 3: Inject the secret as an environment variable
+      - name: Set environment variable
+        env:
+          APP_PASS: ${{ secrets.APP_PASS }}
+
+      # Step 4: Install dependencies
+      - name: Install dependencies
+        run: npm install
+
+      # Step 5: Run the script
+      - name: Run the scraper
+        env:
+          APP_PASS: ${{ secrets.APP_PASS }} # Pass the secret to the script
+        run: node index.js
