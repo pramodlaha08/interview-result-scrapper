@@ -15,7 +15,10 @@ const EMAIL = {
 const PROCESSED_FILE = path.join(__dirname, "processed.json");
 
 async function fetchPDFs() {
-  const browser = await puppeteer.launch({ headless: true });
+  const browser = await puppeteer.launch({
+    headless: true, // Run in headless mode (without opening a visible browser window)
+    args: ['--no-sandbox', '--disable-setuid-sandbox'], // Disable the sandbox for environments like GitHub Actions
+  });
   const page = await browser.newPage();
   await page.goto(URL, { waitUntil: "networkidle2" });
 
