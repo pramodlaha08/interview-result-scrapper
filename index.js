@@ -10,14 +10,14 @@ const EMAIL = {
   service: "gmail",
   user: "pramodlaha375@gmail.com", // Your email
   pass: process.env.APP_PASS, // Securely use the app password
-  recipients: ["pramodlaha@himalayacollege.edu.np"], // Array of emails
+  recipients: ["pramodlaha@himalayacollege.edu.np", "kamleshlaha@gmail.com"], // Array of emails
 };
 const PROCESSED_FILE = path.join(__dirname, "processed.json");
 
 async function fetchPDFs() {
   const browser = await puppeteer.launch({
     headless: true, // Run in headless mode (without opening a visible browser window)
-    args: ['--no-sandbox', '--disable-setuid-sandbox'], // Disable the sandbox for environments like GitHub Actions
+    args: ["--no-sandbox", "--disable-setuid-sandbox"], // Disable the sandbox for environments like GitHub Actions
   });
   const page = await browser.newPage();
   await page.goto(URL, { waitUntil: "networkidle2" });
